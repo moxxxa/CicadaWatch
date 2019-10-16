@@ -1,0 +1,302 @@
+<template>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated>
+      <q-toolbar class="q-pt-xs">
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          icon="menu"
+          aria-label="Menu"
+        />
+        <q-toolbar-title>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <q-img
+            src="statics/Logo-Augarde-HD.png"
+            style="height: 60px; max-width: 92px"
+          >
+          </q-img>
+        </q-toolbar-title>
+      <q-btn-toggle
+        flat stretch
+        toggle-color="white"
+        push
+        :ripple="{ color: 'black' }"
+        v-model="switchToclientService"
+        :options="[
+          {label: 'Service client', icon: 'contact_mail', slot: 'ClientChat', value: true},
+          {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
+          {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
+          {label: 'Profile', slot: 'Profile', icon: 'perm_identity'}
+        ]"
+      >
+      <template v-slot:Favoris>
+          <q-tooltip
+            content-class="bg-amber text-black shadow-4"
+            content-style="font-size: 16px"
+            :offset="[10, 10]"
+            transition-show="rotate"
+            transition-hide="rotate"
+          >
+            Consulter vos coups de coeur
+        </q-tooltip>
+          <q-badge v-if="nbItemFavori > 0" floating color="red">{{nbItemFavori}}</q-badge>
+          <q-menu
+            anchor="top right"
+            self="bottom right"
+            transition-show="flip-right"
+            transition-hide="flip-left"
+          >
+            <div v-if="nbItemFavori === 0" class="q-pa-md text-center">
+              <br>
+              <q-icon size ="150px" name="favorite_border"  style="color: #DCDCDC;"/>
+              <font size="4" style="color: #DCDCDC;"><p>Votre liste des favoris vide</p></font>
+            </div>
+            <div v-else class="q-pl-md q-pr-md q-pb-md">
+              <div><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></div>
+              <div v-for="link in favorisListe" :key="link">
+              <div class="flex row">
+                <q-space/>
+                <q-btn icon="delete" flat round dense @click="removeFromFavoris(link)" />
+              </div>
+              <q-img
+                :src="link.imageGenarle"
+                spinner-color="white"
+                style="height: 120px; max-width: 80px"
+              />
+              <span><font size="2" face="Arial">&nbsp;&nbsp;&nbsp;{{link.name}}</font></span>
+              <q-separator/>
+              <br>
+            </div>
+            <q-separator/>
+            <br>
+          </div>
+          </q-menu>
+        </template>
+
+        <template v-slot:Panier>
+          <q-tooltip
+            content-class="bg-amber text-black shadow-4"
+            content-style="font-size: 16px"
+            :offset="[10, 10]"
+            transition-show="rotate"
+            transition-hide="rotate"
+          >
+            Consulter votre Panier
+        </q-tooltip>
+          <q-badge v-if="nbItemPanier > 0" floating color="red" >{{nbItemPanier}}</q-badge>
+          <q-menu
+            anchor="top right"
+            self="bottom right"
+            transition-show="flip-right"
+            transition-hide="flip-left"
+          >
+            <div v-if="nbItemPanier === 0" class="q-pa-md text-center">
+              <br>
+              <q-icon size ="150px" name="shopping_basket"  style="color: #DCDCDC;"/>
+              <font size="4" style="color: #DCDCDC;"><p>Votre panier est tristement vide</p></font>
+            </div>
+            <div v-else class="q-pl-md q-pr-md q-pb-md">
+              <div><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></div>
+              <div v-for="link in panierListe" :key="link">
+              <div class="flex row">
+                <q-space/>
+                <q-btn icon="delete" flat round dense @click="removeFromBasket(link)" />
+              </div>
+              <q-img
+                :src="link.imageGenarle"
+                spinner-color="white"
+                style="height: 120px; max-width: 80px"
+              />
+              <span><font size="2" face="Arial">&nbsp;&nbsp;&nbsp;{{link.name}}</font></span>
+              <div class="row items-center">
+                <q-space/>
+                <p><strong>{{link.price}}EUR</strong></p>
+              </div>
+              <q-separator/>
+              <br>
+            </div>
+            <q-separator/>
+            <br>
+            <div class="row items-center">
+               <p><font size="4"><strong>Total</strong></font><font size="1" color="grey">&nbsp;(Hors livraison)</font></p>
+               <q-space/>
+               <p><font size="4" color="red">{{totalPrice()}}EUR</font></p>
+            </div>
+            <br>
+            <div class="text-center">
+              <q-btn
+                label="Voir mon panier"
+                color="warning"
+                @click="voirPanier"
+              />
+            </div>
+          </div>
+          </q-menu>
+        </template>
+        <template
+          v-slot:ClientChat
+          >
+          <q-tooltip
+            content-class="bg-amber text-black shadow-4"
+            content-style="font-size: 16px"
+            :offset="[10, 10]"
+            transition-show="rotate"
+            transition-hide="rotate"
+          >
+            Contacter le service client
+          </q-tooltip>
+        </template>
+        <template v-slot:Profile>
+          <q-menu anchor="top right" self="bottom right" content-class="bg-purple text-white">
+            <profile-menus />
+          </q-menu>
+        </template>
+      </q-btn-toggle>
+            </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-2"
+    >
+    <q-list>
+            <q-item clickable tag="a" target="_blank" href="#">
+              <q-item-section avatar>
+                <q-icon size ="50px" name="img:./assets/consoleIcon/ps4.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>Tendance</q-item-label>
+                  <q-item-label caption>Les dernières tendances</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable tag="a" target="_blank" href="#">
+              <q-item-section avatar>
+                <q-icon size ="50px" name="img:./assets/consoleIcon/xbox.png"/>
+              </q-item-section>
+              <q-item-section>
+              <div class="q-pa-md">
+                <q-item-label>Elégance</q-item-label>
+                <q-item-label caption>Lorem lorem</q-item-label>
+              </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable tag="a" target="_blank" href="#">
+              <q-item-section avatar>
+                <q-icon size="50px" name="img:./assets/consoleIcon/nintendo-switch.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>SPORT</q-item-label>
+                  <q-item-label caption>Lorem lorem</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable tag="a" target="_blank" href="#">
+              <q-item-section avatar>
+                <q-icon size="50px" name="img:./assets/consoleIcon/controller.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>accessoires</q-item-label>
+                  <q-item-label caption>Lorem lorem</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable tag="a" target="about" href="about">
+              <q-item-section avatar>
+                <q-icon size="50px" name="img:./assets/a_propos.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>à propos de AUGRADE</q-item-label>
+                  <q-item-label caption>Qui somme nous ?</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+          </q-list>
+    </q-drawer>
+    <div v-if="switchToclientService">
+      {{serviceClient()}}
+    </div>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script>
+import Vue from 'vue'
+window.bus = new Vue()
+import ProfileMenus from 'src/components/profile/ProfileMenus'
+export default {
+  name: 'LayoutConnected',
+  components: {
+    ProfileMenus
+  },
+  data () {
+    return {
+      switchToclientService: false,
+      nbItemPanier: 0,
+      nbItemFavori: 0,
+      leftDrawerOpen: false,
+      panierListe: [],
+      favorisListe: []
+    }
+  },
+  created () {
+    window.bus.$on('reactionPanierFavoris', (motife) => {
+      console.log('done trasmission 1')
+      if (motife === 'panier') {
+        this.nbItemPanier = this.nbItemPanier + 1
+      } else if (motife === 'favoris') {
+        this.nbItemFavori = this.nbItemFavori + 1
+      }
+    })
+    window.bus.$on('productAddToPanier', (product) => {
+      this.panierListe.push(product)
+    })
+    window.bus.$on('productAddToFavoris', (product) => {
+      console.log('emited to favori')
+      this.favorisListe.push(product)
+    })
+  },
+  methods: {
+    voirPanier () {
+      this.$router.push({ path: 'Home/panier', query: { liste: this.panierListe } })
+    },
+    removeFromFavoris (link) {
+      for (var i = 0; i < this.favorisListe.length; i++) {
+        if (this.favorisListe[i].id === link.id) {
+          this.nbItemFavori -= 1
+          this.favorisListe.splice(i, 1)
+        }
+      }
+    },
+    removeFromBasket (link) {
+      for (var i = 0; i < this.panierListe.length; i++) {
+        if (this.panierListe[i].id === link.id) {
+          this.nbItemPanier -= 1
+          this.panierListe.splice(i, 1)
+        }
+      }
+    },
+    serviceClient () {
+      this.switchToclientService = false
+      this.$router.push('clientService')
+    },
+    totalPrice () {
+      let sum = 0
+      for (var i = 0; i < this.panierListe.length; i++) {
+        sum = sum + this.panierListe[i].price
+      }
+      return sum
+    }
+  }
+}
+</script>

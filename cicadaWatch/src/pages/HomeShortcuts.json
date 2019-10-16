@@ -1,0 +1,27 @@
+[
+    {
+      "id": "1" ,
+      "name": "LOREM",
+      "category": "LUXE",
+      "imageGenarle": "statics/1/1.jpg",
+      "imageSecondary": "statics/1/1.jpg",
+      "price": 140,
+      "slide": 1
+    }, {
+      "id": "2",
+      "name": "LOREMX",
+      "category": "ELEGANCE",
+      "imageGenarle": "statics/2/2.jpg",
+      "imageSecondary": "statics/2/2.jpg",
+      "price": 200,
+      "slide": 1
+    }, {
+      "id": "3",
+      "name": "LOREMY",
+      "category": "SPORT",
+      "imageGenarle": "statics/3/3.jpg",
+      "imageSecondary": "statics/3/3.jpg",
+      "price": 180,
+      "slide": 1
+    }
+  ]
