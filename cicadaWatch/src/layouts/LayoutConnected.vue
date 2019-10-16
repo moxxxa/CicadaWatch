@@ -20,13 +20,14 @@
           </q-img>
         </q-toolbar-title>
       <q-btn-toggle
+        size="sm"
         flat stretch
         toggle-color="white"
         push
         :ripple="{ color: 'black' }"
         v-model="switchToclientService"
         :options="[
-          {label: 'Service client', icon: 'contact_mail', slot: 'ClientChat', value: true},
+          {label: 'Contact', icon: 'contact_mail', slot: 'ClientChat', value: true},
           {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
           {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
           {label: 'Profile', slot: 'Profile', icon: 'perm_identity'}
@@ -56,7 +57,7 @@
             </div>
             <div v-else class="q-pl-md q-pr-md q-pb-md">
               <div><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></div>
-              <div v-for="link in favorisListe" :key="link">
+              <div v-for="link in favorisListe" :key="link.id">
               <div class="flex row">
                 <q-space/>
                 <q-btn icon="delete" flat round dense @click="removeFromFavoris(link)" />
@@ -100,7 +101,7 @@
             </div>
             <div v-else class="q-pl-md q-pr-md q-pb-md">
               <div><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></div>
-              <div v-for="link in panierListe" :key="link">
+              <div v-for="link in panierListe" :key="link.id">
               <div class="flex row">
                 <q-space/>
                 <q-btn icon="delete" flat round dense @click="removeFromBasket(link)" />
@@ -251,23 +252,39 @@ export default {
     }
   },
   created () {
-    window.bus.$on('reactionPanierFavoris', (motife) => {
-      console.log('done trasmission 1')
-      if (motife === 'panier') {
+    window.bus.$on('productAddToPanier', (product) => {
+      console.log('dans ajout panier')
+      if (!this.findPanier(product)) {
         this.nbItemPanier = this.nbItemPanier + 1
-      } else if (motife === 'favoris') {
-        this.nbItemFavori = this.nbItemFavori + 1
+        this.panierListe.push(product)
       }
     })
-    window.bus.$on('productAddToPanier', (product) => {
-      this.panierListe.push(product)
-    })
     window.bus.$on('productAddToFavoris', (product) => {
-      console.log('emited to favori')
-      this.favorisListe.push(product)
+      console.log('dans ajout favoris')
+      if (!this.findFavoris(product)) {
+        this.nbItemFavori = this.nbItemFavori + 1
+        console.log('emited to favori')
+        this.favorisListe.push(product)
+      }
     })
   },
   methods: {
+    findPanier (product) {
+      for (var i = 0; i < this.panierListe.length; i++) {
+        if (this.panierListe[i].id === product.id) {
+          return true
+        }
+      }
+      return false
+    },
+    findFavoris (product) {
+      for (var i = 0; i < this.favorisListe.length; i++) {
+        if (this.favorisListe[i].id === product.id) {
+          return true
+        }
+      }
+      return false
+    },
     voirPanier () {
       this.$router.push({ path: 'Home/panier', query: { liste: this.panierListe } })
     },
@@ -279,6 +296,7 @@ export default {
         if (this.favorisListe[i].id === link.id) {
           this.nbItemFavori -= 1
           this.favorisListe.splice(i, 1)
+          window.bus.$emit('removeFromFavoris', link.id)
         }
       }
     },
@@ -287,6 +305,7 @@ export default {
         if (this.panierListe[i].id === link.id) {
           this.nbItemPanier -= 1
           this.panierListe.splice(i, 1)
+          window.bus.$emit('removeFromBasket', link.id)
         }
       }
     },
