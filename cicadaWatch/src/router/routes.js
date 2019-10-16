@@ -6,6 +6,7 @@ const LayoutPanier = () => import('layouts/LayoutPanier')
 const Panier = () => import('components/Panier/Panier')
 
 const routes = [
+  { path: '', redirect: '/home' },
   {
     path: '/home',
     component: LayoutConnected,

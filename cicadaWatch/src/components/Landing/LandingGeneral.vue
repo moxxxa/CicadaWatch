@@ -19,7 +19,7 @@
           </q-item>
           <q-img
             :src="link.imageGenarle"
-            @click="ShowImageGame(link.imageGenarle)"
+            @click="goToProduct(link.id)"
             style="height: 250px; max-width: 300px"
           >
           <div class="absolute-bottom custom-caption">
@@ -134,6 +134,9 @@ export default {
     }
   },
   methods: {
+    goToProduct (id) {
+
+    },
     ShowImageGame (imgUrl) {
       this.showImageGameDialoge = true
       this.currentGameImage = imgUrl

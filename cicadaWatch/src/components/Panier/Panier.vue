@@ -223,80 +223,90 @@
     </div>
   -->
   <div class="flex row">
-    <div class="col-12">
+    <div class="col-md-12">
       &nbsp;
     </div>
-    <div class="col-12">
-      <center>
+    <div class="flex row">
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        &nbsp;
+      </div>
+      <div class="col-md-2 col-sm-2 col-xs-2">
         <q-img
           src="statics/cc-visa-brands.svg"
           style="height: 50px; max-width: 60px"
         >
-      </q-img>
-      &nbsp;&nbsp;
-        <font size="5">Payer avec Visa ou MasterCard</font>
-        &nbsp;&nbsp;
+        </q-img>
+      </div>
+      <div class="col-md-1 col-sm-1 col-xs-1">
+        &nbsp;
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-3">
         <q-img
           src="statics/cc-mastercard-brands.svg"
           style="height: 50px; max-width: 60px"
-        >
-      </q-img>
-      </center>
-    </div>
-    <div class="col-12">
+          >
+        </q-img>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <center>
+          <font size="5">Payer avec Visa ou MasterCard</font>
+        </center>
+      </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
       &nbsp;
     </div>
-    <div class="col-4"/>
-    <div class="col-4">
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12"/>
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <q-input color="teal" filled v-model="text" label="Nom">
         <template v-slot:prepend>
           <q-icon name="person_pin" />
         </template>
       </q-input>
     </div>
-    <div class="col-4"/>
+    <div class="col-md-4 col-sm-12 col-xs-12"/>
     <!---------------->
-    <div class="col-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
       &nbsp;
     </div>
-    <div class="col-4"/>
-    <div class="col-4">
+    <div class="col-md-4 col-sm-12 col-xs-12"/>
+    <div class="col-md-4 col-sm-12 col-xs-12">
       <q-input color="teal" filled v-model="text" label="Numéro de la carte">
         <template v-slot:prepend>
           <q-icon name="credit_card" />
         </template>
       </q-input>
     </div>
-    <div class="col-4"/>
-    <div class="col-12">
+    <div class="col-md-4 col-sm-12 col-xs-12"/>
+    <div class="col-md-12 col-sm-12 col-xs-12">
       &nbsp;
     </div>
-    <div class="col-4"/>
-    <div class="col-2">
+    <div class="col-md-4 col-sm-12 col-xs-12"/>
+    <div class="col-md-2 col-sm-6 col-xs-6">
       <q-input color="teal" filled v-model="text" label="MM/YY">
         <template v-slot:prepend>
           <q-icon name="calendar_today" />
         </template>
       </q-input>
     </div>
-    <div class="col-2">
+    <div class="col-md-2 col-sm-6 col-xs-6">
       <q-input color="teal" filled v-model="text" label="CVC">
         <template v-slot:prepend>
           <q-icon name="security" />
         </template>
       </q-input>
     </div>
-  <div class="col-4"/>
-      <div class="col-12">
+  <div class="col-md-4 col-sm-12 col-xs-12"/>
+      <div class="col-md-12 col-sm-12 col-xs-12">
         &nbsp;
       </div>
-      <div class="col-5"/>
-      <div class="col-4">
+      <div class="col-md-5 col-sm-4 col-xs-4"/>
+      <div class="col-md-4 col-sm-4 col-xs-4">
         <q-btn label="Valider le payement" color="primary" @click="PayerWithStripe"/>
       </div>
-      <div class="col-4"/>
-    </div>
+      <div class="col-md-4 col-sm-4 col-xs-4"/>
 </div>
+  </div>
 </div>
 </template>
 <script>
