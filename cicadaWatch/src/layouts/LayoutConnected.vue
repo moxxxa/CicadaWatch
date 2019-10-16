@@ -15,7 +15,6 @@
           <q-img
             src="statics/Logo-Augarde-HD.png"
             style="height: 60px; max-width: 92px"
-            @click="goToHome"
           >
           </q-img>
         </q-toolbar-title>
@@ -221,6 +220,26 @@
                 </div>
               </q-item-section>
             </q-item>
+            <q-item clickable tag="a" target="about" href="#/address">
+              <q-item-section avatar>
+                <q-icon size="50px" name="img:./assets/a_propos.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>address</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable tag="a" target="about" href="#/contact">
+              <q-item-section avatar>
+                <q-icon size="50px" name="img:./assets/a_propos.png"/>
+              </q-item-section>
+              <q-item-section>
+                <div class="q-pa-md">
+                  <q-item-label>contact</q-item-label>
+                </div>
+              </q-item-section>
+            </q-item>
           </q-list>
     </q-drawer>
     <div v-if="switchToclientService">
@@ -287,9 +306,6 @@ export default {
     },
     voirPanier () {
       this.$router.push({ path: 'Home/panier', query: { liste: this.panierListe } })
-    },
-    goToHome () {
-      this.$router.push('/home')
     },
     removeFromFavoris (link) {
       for (var i = 0; i < this.favorisListe.length; i++) {
