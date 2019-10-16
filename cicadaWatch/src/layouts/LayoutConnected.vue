@@ -15,6 +15,7 @@
           <q-img
             src="statics/Logo-Augarde-HD.png"
             style="height: 60px; max-width: 92px"
+            @click="goToHome"
           >
           </q-img>
         </q-toolbar-title>
@@ -269,6 +270,9 @@ export default {
   methods: {
     voirPanier () {
       this.$router.push({ path: 'Home/panier', query: { liste: this.panierListe } })
+    },
+    goToHome () {
+      this.$router.push('/home')
     },
     removeFromFavoris (link) {
       for (var i = 0; i < this.favorisListe.length; i++) {

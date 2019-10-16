@@ -19,7 +19,7 @@
           </q-item>
           <q-img
             :src="link.imageGenarle"
-            @click="goToProduct(link.id)"
+            @click="goToProduct(link)"
             style="height: 250px; max-width: 300px"
           >
           <div class="absolute-bottom custom-caption">
@@ -81,7 +81,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog medium-width v-model="showImageGameDialoge" transition-show="flip-down" transition-hide="flip-up">
+    <q-dialog medium-width v-model="showImageDialoge" transition-show="flip-down" transition-hide="flip-up">
       <q-card style="width: 400px; max-width: 80vw;">
         <q-card-section class="row items-center justify-between">
         </q-card-section>
@@ -130,15 +130,15 @@ export default {
       slide: 'first',
       gameName: '',
       currentGameImage: '',
-      showImageGameDialoge: false
+      showImageDialoge: false
     }
   },
   methods: {
-    goToProduct (id) {
-
+    goToProduct (link) {
+      this.$router.push({ path: 'detail-product', query: { prod: link } })
     },
-    ShowImageGame (imgUrl) {
-      this.showImageGameDialoge = true
+    ShowImage (imgUrl) {
+      this.showImageDialoge = true
       this.currentGameImage = imgUrl
     },
     showVideo (video, name) {
