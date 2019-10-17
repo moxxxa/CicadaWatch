@@ -12,12 +12,11 @@
         />
         <q-toolbar-title>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <q-img
-            src="statics/Logo-Augarde-HD.png"
-            style="height: 60px; max-width: 92px"
+          <q-icon
+            name="home"
             @click="goHome"
           >
-          </q-img>
+        </q-icon>
         </q-toolbar-title>
       <q-btn-toggle
         size="sm"
@@ -25,8 +24,9 @@
         toggle-color="white"
         push
         :ripple="{ color: 'black' }"
-        v-model="switchToclientService"
+        v-model="switchToWorkshop"
         :options="[
+          {label: 'Atelier', slot: 'workshop', icon: 'fas fa-tools', value: 1},
           {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
           {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
           {label: 'compte', slot: 'Profile', icon: 'perm_identity'}
@@ -137,7 +137,7 @@
           </q-menu>
         </template>
         <template
-          v-slot:ClientChat
+          v-slot:workshop
           >
           <q-tooltip
             content-class="bg-amber text-black shadow-4"
@@ -146,7 +146,7 @@
             transition-show="rotate"
             transition-hide="rotate"
           >
-            Contacter le service client
+            Créer votre montre
           </q-tooltip>
         </template>
         <template v-slot:Profile>
@@ -204,12 +204,12 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-amber-2"
+      content-class="bg-secondary"
     >
   <QlayoutList/>
     </q-drawer>
-    <div v-if="switchToclientService">
-      {{serviceClient()}}
+    <div v-if="switchToWorkshop">
+      {{workshop()}}
     </div>
     <q-dialog
       medium-width
@@ -260,7 +260,7 @@ export default {
       showConnexion: false,
       showInscDialog: false,
       connected: false,
-      switchToclientService: false,
+      switchToWorkshop: false,
       nbItemPanier: 0,
       nbItemFavori: 0,
       leftDrawerOpen: false,
@@ -291,6 +291,9 @@ export default {
     })
   },
   methods: {
+    workshop () {
+      this.$router.push({ path: '/workshop' })
+    },
     getPicture (link) {
       console.log('dans get pictures')
       const adresse = `${API_URL}${link}`
