@@ -1,6 +1,6 @@
 <template>
   <div class="bg-indigo-1">
-    <landing :shortcuts="shortcuts" @reactionPanierFavoris="updateLayout" />
+    <landing  @reactionPanierFavoris="updateLayout" />
     <Publicity/>
   </div>
 </template>
@@ -8,7 +8,6 @@
 <script>
 import Landing from 'src/components/Landing/LandingGeneral'
 import Publicity from 'src/components/Publicity/Publicity'
-import { getProducts } from '../../../ApiClient/client'
 
 export default {
   name: 'Home',
@@ -16,19 +15,16 @@ export default {
     Landing,
     Publicity
   },
+  created () {
+
+  },
   data () {
     return {
 
     }
   },
   computed: {
-    shortcuts () {
-      getProducts().then( response => {
-        let data = response
-        console.log('data =', data)
-        sessionStorage.setItem('products', data)
-      })
-    }
+
   },
   methods: {
     updateLayout (motife) {
