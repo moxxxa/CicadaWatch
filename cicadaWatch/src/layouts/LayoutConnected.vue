@@ -63,7 +63,7 @@
                 <q-btn icon="delete" flat round dense @click="removeFromFavoris(link)" />
               </div>
               <q-img
-                :src="link.imageGenarle"
+                :src="getPicture(link.pictures[0])"
                 spinner-color="white"
                 style="height: 120px; max-width: 80px"
               />
@@ -107,7 +107,7 @@
                 <q-btn icon="delete" flat round dense @click="removeFromBasket(link)" />
               </div>
               <q-img
-                :src="link.imageGenarle"
+                :src="getPicture(link.pictures[0])"
                 spinner-color="white"
                 style="height: 120px; max-width: 80px"
               />
@@ -291,6 +291,12 @@ export default {
     })
   },
   methods: {
+    getPicture (link) {
+      console.log('dans get pictures')
+      const adresse = `${API_URL}${link}`
+      console.log('adresse =', adresse)
+      return adresse
+    },
     onDialogHide () {
       // required to be emitted
       // when QDialog emits "hide" event

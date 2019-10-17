@@ -19,7 +19,7 @@
           </q-item>
           <q-img
             :src="getPicture(link.pictures[0])"
-            @click="goToProduct(link)"
+            @click="goToProduct(link.id)"
             style="height: 250px; max-width: 300px"
           >
           <div class="absolute-bottom custom-caption">
@@ -133,8 +133,8 @@ export default {
         }
       }
     },
-    goToProduct (link) {
-      this.$router.push({ path: 'detail-product', query: { prod: link } })
+    goToProduct (id) {
+      this.$router.push({ path: 'detail-product', query: { id: id } })
     },
     trigger () {
       const bar = this.$refs.bar
