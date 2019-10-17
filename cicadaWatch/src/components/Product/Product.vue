@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-xs">
     <center><h4>&nbsp;&nbsp;&nbsp;&nbsp;{{prod.name}}</h4></center>
+    <br><br><br>
     <div class="flex row">
       <div class="col-md-4 col-xs-3 col-sm-3">
         <div class="col-xs-12 col-sm-12">
@@ -17,9 +18,25 @@
      </q-chip>
   </div>
 </div>
-  
 
   <div class="col-md-3 col-xs-8 col-sm-8">
+    <div class="flex row">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
     <q-carousel
       arrows
       animated
@@ -27,7 +44,7 @@
       infinite
       transition-prev="jump-right"
       transition-next="jump-left"
-      control-color="white"
+      control-color="black"
       prev-icon="arrow_left"
       next-icon="arrow_right"
       v-model="slide"
@@ -37,7 +54,28 @@
       </span>
     </q-carousel>
   </div>
+  </div>
+</div>
   <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="flex rox">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
   <q-btn-toggle
     push
     v-model="actionProduit"
@@ -50,6 +88,7 @@
     ]"
   >
 </q-btn-toggle>
+</div>
 </div>
 </div>
 <div v-if="actionProduit === 1">

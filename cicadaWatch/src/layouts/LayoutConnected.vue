@@ -27,7 +27,6 @@
         :ripple="{ color: 'black' }"
         v-model="switchToclientService"
         :options="[
-          {label: 'Contact', icon: 'contact_mail', slot: 'ClientChat', value: true},
           {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
           {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
           {label: 'compte', slot: 'Profile', icon: 'perm_identity'}
@@ -243,6 +242,7 @@ import profileEditor from 'src/components/profile/EditProfile'
 import QlayoutList from 'src/layouts/QlayoutList'
 import Inscription from 'src/components/Inscription/Inscription'
 import Connexion from 'src/components/Connexion/Connexion'
+import { API_URL } from '../../../ApiClient/client'
 export default {
   name: 'LayoutConnected',
   components: {
@@ -344,10 +344,6 @@ export default {
           window.bus.$emit('removeFromBasket', link.id)
         }
       }
-    },
-    serviceClient () {
-      this.switchToclientService = false
-      this.$router.push('clientService')
     },
     totalPrice () {
       let sum = 0
