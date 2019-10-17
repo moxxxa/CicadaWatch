@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="q-pt-xs">
+      <q-toolbar class="q-pt-xs bg-brown-4">
         <q-btn
           flat
           dense
@@ -15,6 +15,7 @@
           <q-img
             src="statics/Logo-Augarde-HD.png"
             style="height: 60px; max-width: 92px"
+            @click="goHome"
           >
           </q-img>
         </q-toolbar-title>
@@ -29,7 +30,7 @@
           {label: 'Contact', icon: 'contact_mail', slot: 'ClientChat', value: true},
           {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
           {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
-          {label: 'Profile', slot: 'Profile', icon: 'perm_identity'}
+          {label: 'compte', slot: 'Profile', icon: 'perm_identity'}
         ]"
       >
       <template v-slot:Favoris>
@@ -150,8 +151,50 @@
           </q-tooltip>
         </template>
         <template v-slot:Profile>
-          <q-menu anchor="top right" self="bottom right" content-class="bg-purple text-white">
-            <profile-menus />
+          <q-menu anchor="top right" self="bottom right" content-class="bg-grey text-white">
+              <q-list class="link-decoration" v-if="connected">
+                <q-item>
+                    <q-item-section avatar class="q-pa-md">
+                      <q-avatar>
+                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                      </q-avatar>
+                    </q-item-section>
+                  <q-item-section right color="primary">
+                    <q-btn icon="edit" flat round @click="editProfile = true" color="secondary" />
+                  </q-item-section>
+                </q-item>
+                <q-item class="flex-center">
+                  User name
+                </q-item>
+                <q-item>
+                  <q-btn box="rectangle" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
+                </q-item>
+                <q-dialog v-model="editProfile" content-classes="editprofile-content">
+                    <q-card style="width: 700px; max-width: 80vw;">
+                      <q-card-section class="row items-center justify-between">
+                        <profileEditor @hide="editProfile = false" :profile="user" />
+                      </q-card-section>
+                    </q-card>
+                </q-dialog>
+              </q-list>
+              <q-list v-else class="link-decoration">
+                <q-item>
+                  <q-btn box="rectangle" anchor="center right" self="center left" label="Connexion" color="secondary"
+                  push
+                  size="md"
+                  v-close-popup
+                  @click="showConnexion = true"
+                  />
+                </q-item>
+                <q-item>
+                  <q-btn box="rectangle" anchor="center right" self="center left" label="Inscription" color="secondary"
+                  push
+                  size="md"
+                  v-close-popup
+                  @click="showInscription"
+                  />
+                </q-item>
+              </q-list>
           </q-menu>
         </template>
       </q-btn-toggle>
@@ -162,89 +205,31 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-2"
+      content-class="bg-amber-2"
     >
-    <q-list>
-            <q-item clickable tag="a" target="_blank" href="#">
-              <q-item-section avatar>
-                <q-icon size ="50px" name="img:./assets/consoleIcon/ps4.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>Tendance</q-item-label>
-                  <q-item-label caption>Les dernières tendances</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="#">
-              <q-item-section avatar>
-                <q-icon size ="50px" name="img:./assets/consoleIcon/xbox.png"/>
-              </q-item-section>
-              <q-item-section>
-              <div class="q-pa-md">
-                <q-item-label>Elégance</q-item-label>
-                <q-item-label caption>Lorem lorem</q-item-label>
-              </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="#">
-              <q-item-section avatar>
-                <q-icon size="50px" name="img:./assets/consoleIcon/nintendo-switch.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>SPORT</q-item-label>
-                  <q-item-label caption>Lorem lorem</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="#">
-              <q-item-section avatar>
-                <q-icon size="50px" name="img:./assets/consoleIcon/controller.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>accessoires</q-item-label>
-                  <q-item-label caption>Lorem lorem</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="about" href="about">
-              <q-item-section avatar>
-                <q-icon size="50px" name="img:./assets/a_propos.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>à propos de AUGRADE</q-item-label>
-                  <q-item-label caption>Qui somme nous ?</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="about" href="#/address">
-              <q-item-section avatar>
-                <q-icon size="50px" name="img:./assets/a_propos.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>address</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="about" href="#/contact">
-              <q-item-section avatar>
-                <q-icon size="50px" name="img:./assets/a_propos.png"/>
-              </q-item-section>
-              <q-item-section>
-                <div class="q-pa-md">
-                  <q-item-label>contact</q-item-label>
-                </div>
-              </q-item-section>
-            </q-item>
-          </q-list>
+  <QlayoutList/>
     </q-drawer>
     <div v-if="switchToclientService">
       {{serviceClient()}}
     </div>
+    <q-dialog
+      medium-width
+      v-model="showConnexion"
+      transition-show="flip-down"
+      transition-hide="flip-up"
+      @hide="onDialogHide"
+      >
+      <connexion/>
+    </q-dialog>
+    <q-dialog
+      :maximized="maximizedToggle"
+      v-model="showInscDialog"
+      transition-show="flip-down"
+      transition-hide="flip-up"
+      @hide="onDialogHide"
+      >
+      <inscription/>
+    </q-dialog>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -254,14 +239,27 @@
 <script>
 import Vue from 'vue'
 window.bus = new Vue()
-import ProfileMenus from 'src/components/profile/ProfileMenus'
+import profileEditor from 'src/components/profile/EditProfile'
+import QlayoutList from 'src/layouts/QlayoutList'
+import Inscription from 'src/components/Inscription/Inscription'
+import Connexion from 'src/components/Connexion/Connexion'
 export default {
   name: 'LayoutConnected',
   components: {
-    ProfileMenus
+    //  ProfileMenus,
+    QlayoutList,
+    Inscription,
+    Connexion,
+    profileEditor
   },
   data () {
     return {
+      user: [],
+      editProfile: false,
+      maximizedToggle: true,
+      showConnexion: false,
+      showInscDialog: false,
+      connected: false,
       switchToclientService: false,
       nbItemPanier: 0,
       nbItemFavori: 0,
@@ -271,6 +269,11 @@ export default {
     }
   },
   created () {
+    /*    window.bus.$on('letIConnect', (userFinal) => {
+      this.user = userFinal
+      console.log('')
+    })
+    */
     window.bus.$on('productAddToPanier', (product) => {
       console.log('dans ajout panier')
       if (!this.findPanier(product)) {
@@ -288,6 +291,17 @@ export default {
     })
   },
   methods: {
+    onDialogHide () {
+      // required to be emitted
+      // when QDialog emits "hide" event
+      this.$emit('hide')
+    },
+    showInscription () {
+      this.showInscDialog = true
+    },
+    goHome () {
+      this.$router.back()
+    },
     findPanier (product) {
       for (var i = 0; i < this.panierListe.length; i++) {
         if (this.panierListe[i].id === product.id) {

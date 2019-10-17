@@ -8,12 +8,12 @@
   <form>
     <div class="flex row q-pa-md justify-center">
         <q-field class="col-6 q-mb-md">
-          <q-input v-model="profileEdit.nom"/>
+          <q-input v-model="profile.name"/>
         </q-field>
     </div>
     <div class="flex row q-pa-md justify-center">
         <q-field  class="col-6 q-mb-md">
-          <q-input v-model="profileEdit.prenom"/>
+          <q-input v-model="profile.prenom"/>
         </q-field>
     </div>
     <div class="flex row col-12 justify-start">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { helpers, required, maxLength, minLength, sameAs } from 'vuelidate/lib/validators'
+import { required, maxLength, minLength, sameAs } from 'vuelidate/lib/validators'
 import Password from 'vue-password-strength-meter'
 import Passwords from './password-settings'
 export default {
@@ -41,9 +41,11 @@ export default {
   components: {
     Password
   },
+  props: {
+    profile: { type: Array, required: true }
+  },
   data () {
     return {
-      profile: null,
       password1: '',
       password2: '',
       passwordScore: 0,
@@ -77,9 +79,6 @@ export default {
       validators.password1.maxLength = maxLength(this.passwordSettings.maxLength)
       validators.password1.minScore = 2
       validators.password2.sameAs = sameAs('password1')
-      if (this.profile) {
-        validators.password1.notSameAs = helpers.withParams({ type: 'differentFromUsername' }, value => value !== this.profile.username)
-      }
     }
     return validators
   },

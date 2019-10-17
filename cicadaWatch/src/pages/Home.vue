@@ -1,6 +1,6 @@
 <template>
   <div class="bg-indigo-1">
-    <landing :shortcuts="shortcuts" @reactionPanierFavoris="updateLayout" />
+    <landing  @reactionPanierFavoris="updateLayout" />
     <Publicity/>
   </div>
 </template>
@@ -8,7 +8,6 @@
 <script>
 import Landing from 'src/components/Landing/LandingGeneral'
 import Publicity from 'src/components/Publicity/Publicity'
-import HomeShortcuts from 'src/pages/HomeShortcuts.json'
 
 export default {
   name: 'Home',
@@ -16,16 +15,16 @@ export default {
     Landing,
     Publicity
   },
+  created () {
+
+  },
   data () {
     return {
 
     }
   },
   computed: {
-    shortcuts () {
-      console.log('shortcuts=', HomeShortcuts)
-      return HomeShortcuts
-    }
+
   },
   methods: {
     updateLayout (motife) {

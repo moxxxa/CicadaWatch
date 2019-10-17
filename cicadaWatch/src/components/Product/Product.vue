@@ -31,10 +31,10 @@
             infinite
             v-model="slide"
           >
-          <q-carousel-slide :name="1" :img-src="prod.imageGenarle">
-          </q-carousel-slide>
-          <q-carousel-slide :name="2" :img-src="prod.imageSecondary">
-          </q-carousel-slide>
+          <div v-for="picture in prod.pictures" :key="picture">
+            <q-carousel-slide :name="picture" :img-src="picture">
+            </q-carousel-slide>
+          </div>
         </q-carousel>
   </div>
   <div class="col-md-6 col-sm-12 col-xs-12">
@@ -86,7 +86,7 @@ export default {
       this.currentGameImage = imgUrl
     },
     toWorkShop () {
-      this.$router.push({ path: 'workshop', query: { product: this.prod } })
+      this.$router.push({ path: '/workshop', query: { product: this.prod } })
       this.actionProduit = 0
     },
     ajouterAuFavoris () {
