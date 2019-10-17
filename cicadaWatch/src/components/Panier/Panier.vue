@@ -333,10 +333,6 @@ export default {
   computed: {
   },
   created () {
-    window.bus.$on('gameAddToPanier', (game) => {
-      console.log('onnnnnnnnnnnnnnnnnn')
-      this.panierListe.push(game)
-    })
     console.log('route params =', this.$route.query)
     if (this.$route.query) {
       this.panierListe = this.$route.query.liste

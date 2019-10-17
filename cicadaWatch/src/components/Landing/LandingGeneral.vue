@@ -19,7 +19,7 @@
           </q-item>
           <q-img
             :src="link.imageGenarle"
-            @click="goToProduct(link.id)"
+            @click="goToProduct(link)"
             style="height: 250px; max-width: 300px"
           >
           <div class="absolute-bottom custom-caption">
@@ -80,21 +80,6 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-
-    <q-dialog medium-width v-model="showImageGameDialoge" transition-show="flip-down" transition-hide="flip-up">
-      <q-card style="width: 400px; max-width: 80vw;">
-        <q-card-section class="row items-center justify-between">
-        </q-card-section>
-        <q-card-section>
-          <center>
-          <q-img
-          style="height: 400px; max-width: 300px"
-          :src="currentGameImage"
-          />
-        </center>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
     <q-ajax-bar
       ref="bar"
       position="bottom"
@@ -117,6 +102,12 @@ export default {
   props: ['shortcuts'],
   created () {
     this.loading = false
+    window.bus.$on('removeFromBasket', (id) => {
+      this.removeFromBasket(id)
+    })
+    window.bus.$on('removeFromFavoris', (id) => {
+      this.removeFromFavoris(id)
+    })
   },
   data  () {
     return {
@@ -129,23 +120,26 @@ export default {
       posts: [],
       slide: 'first',
       gameName: '',
-      currentGameImage: '',
-      showImageGameDialoge: false
+      showImageDialoge: false
     }
   },
   methods: {
-    goToProduct (id) {
-
+    removeFromFavoris (id) {
+      for (var i = 0; i < this.favorisListe.length; i++) {
+        if (this.favorisListe[i].id === id) {
+          this.favorisListe.splice(i, 1)
+        }
+      }
     },
-    ShowImageGame (imgUrl) {
-      this.showImageGameDialoge = true
-      this.currentGameImage = imgUrl
+    removeFromBasket (id) {
+      for (var i = 0; i < this.panierListe.length; i++) {
+        if (this.panierListe[i].id === id) {
+          this.panierListe.splice(i, 1)
+        }
+      }
     },
-    showVideo (video, name) {
-      this.showVideoDialog = true
-      this.VideoUrl = video
-      this.loading = true
-      this.gameName = name
+    goToProduct (link) {
+      this.$router.push({ path: 'detail-product', query: { prod: link } })
     },
     trigger () {
       const bar = this.$refs.bar

@@ -4,7 +4,9 @@ const ClientService = () => import('components/ServiceClient/ServiceClient')
 const About = () => import('components/About/About')
 const LayoutPanier = () => import('layouts/LayoutPanier')
 const Panier = () => import('components/Panier/Panier')
-
+const ProductDetails = () => import('components/Product/Product')
+const Contact = () => import('components/Contact/Contact')
+const Address = () => import('components/Address/Address')
 const routes = [
   { path: '', redirect: '/home' },
   {
@@ -27,6 +29,24 @@ const routes = [
         path: '/clientService',
         components: {
           default: ClientService
+        }
+      },
+      {
+        path: '/detail-product',
+        components: {
+          default: ProductDetails
+        }
+      },
+      {
+        path: '/Contact',
+        components: {
+          default: Contact
+        }
+      },
+      {
+        path: '/Address',
+        components: {
+          default: Address
         }
       }
     ]
