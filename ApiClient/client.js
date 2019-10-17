@@ -1,6 +1,6 @@
 
 
-const API_URL = 'http://127.0.0.1'
+export const API_URL = 'http://89.2.157.0'
 
 /* USERS API */
 

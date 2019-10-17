@@ -138,6 +138,8 @@
 </template>
 <script>
 import Vue from 'vue'
+import { createUser, API_URL } from '../../../../ApiClient/client'
+
 window.bus = new Vue()
 /* eslint-disable */
 import { openURL } from 'quasar'
@@ -183,13 +185,18 @@ export default {
       return false
     },
     onSubmit () {
-      let user = [{
-        name: this.nom,
-        prenom: this.prenom,
+      let user = {
+        firstname: this.nom,
+        surname: this.prenom,
         email: this.email,
-        tel: this.tel,
-        mdp: this.psw
-      }]
+        password: this.psw,
+        phoneNumber: this.tel
+      }
+      createUser(user).then( response => {
+      let data = response
+      this.products = data
+      console.log('user sub =', this.products)
+    });
       window.bus.$emit('letIConnect', user)
       this.$q.notify({
         color: 'green-7',

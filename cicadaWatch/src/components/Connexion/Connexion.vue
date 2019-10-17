@@ -43,6 +43,7 @@
 </template>
 <script>
 //  import webService from '../../../web-service'
+import { getProducts, API_URL } from '../../../../ApiClient/client'
 
 export default {
   name: 'Connexion',
@@ -54,7 +55,7 @@ export default {
   },
   methods: {
     login () {
-      /*  webService.login({ email: this.email, password: this.mdp })
+        webService.login({ email: this.email, password: this.mdp })
         .then(response => {
           let data = response.data.data
           sessionStorage.setItem('token', data.token)
@@ -68,7 +69,7 @@ export default {
             message: 'Invalid credentials'
           })
         })
-    */
+    
     }
   }
 }
