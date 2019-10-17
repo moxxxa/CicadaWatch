@@ -1,3 +1,5 @@
+
+
 const API_URL = 'http://127.0.0.1'
 
 /* USERS API */
@@ -11,7 +13,7 @@ const API_URL = 'http://127.0.0.1'
   En cas de succès, la Promise renvoie le JSON de l'utilisateur.
 
 */
-function getUserFromId (id){
+export function getUserFromId (id){
   return new Promise (function (resolve, reject){
     return sendRequest(API_URL + '/api/users/' + id, 'GET', function (err, json){
       if (err)
@@ -38,7 +40,7 @@ function getUserFromId (id){
   En cas de succès, la Promise renvoie true
 
 */
-function updateUser (id, user){
+export function updateUser (id, user){
   return new Promise (function (resolve, reject) {
     return sendRequest(API_URL + '/api/users/' + id, 'PATCH', function (err, json) {
 
@@ -63,7 +65,7 @@ function updateUser (id, user){
   En cas de succès, la Promise renvoie true
 */
 
-function deleteUser(id){
+export function deleteUser(id){
   return new Promise(function (resolve, reject){
     return sendRequest(API_URL + '/api/users/' + id, 'DELETE', function (err, json){
       if (err)
@@ -89,7 +91,7 @@ function deleteUser(id){
 
 */
 
-function createUser (user){
+export function createUser (user){
   return new Promise (function (resolve, reject) {
     return sendRequest(API_URL + '/api/users/', 'POST', function (err, json){
       if (err)
@@ -113,7 +115,7 @@ function createUser (user){
   En cas de succès, la Promise renvoie un tableau de produits
 
 */
-function getProducts(){
+export function getProducts(){
   return new Promise (function (resolve, reject) {
     return sendRequest(API_URL + '/api/products/', 'GET', function (err, json){
       if (err)
@@ -135,7 +137,7 @@ function getProducts(){
   En cas de succès, la Promise renvoie le produit demandé.
 
 */
-function getProductFromId(id){
+export function getProductFromId(id){
   return new Promise (function (resolve, reject) {
     return sendRequest(API_URL + '/api/products/' + id, 'GET', function (err, json){
       if (err)
