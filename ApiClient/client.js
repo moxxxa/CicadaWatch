@@ -138,8 +138,11 @@ export function getProducts(){
 
 */
 export function getProductFromId(id){
+  
   return new Promise (function (resolve, reject) {
+    
     return sendRequest(API_URL + '/api/products/' + id, 'GET', function (err, json){
+      
       if (err)
       return reject(err)
 
@@ -148,6 +151,62 @@ export function getProductFromId(id){
       }
 
       return resolve(json.result)
+    })
+  })
+}
+
+/* 
+
+  S'authentifier.
+
+  Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
+  La Promise résolue doit fournir un objet contenant les clés suivantes:
+
+  success (booléen): indique si l'authentification a réussi ou non
+  user: id de l'utilisateur authentifié, ou null si l'authentification n'a pas abouti
+
+*/
+
+export function authenticate (email, password){
+  
+  return new Promise (function (resolve, reject) {
+    
+    return sendRequest(API_URL + '/auth/login', 'POST', function (err, json){
+      
+      if (err)
+      return reject(err)
+
+      return resolve({
+        success: json.success,
+        user: json.user
+      })
+
+    }, JSON.stringify({email: email, password: password}))
+  })
+}
+
+/* 
+  Se déauthentifier
+
+  Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
+  La Promise résolue doit renvoyer true.
+
+*/
+export function logout (){
+  
+  return new Promise (function (resolve, reject) {
+    
+    return sendRequest(API_URL + '/auth/logout', 'POST', function (err, json){
+      
+      if (err)
+      return reject(err)
+
+      if (json.success !== true){
+        return reject(new Error('Could not logout.'))
+      }
+
+      return resolve(true)
+
     })
   })
 }
@@ -172,6 +231,8 @@ function sendRequest (url, method, callback, body){
   }
 
   request.open(method, url)
+
+  request.withCredentials = true
 
   if (body)
   request.setRequestHeader('Content-Type', 'application/json')
