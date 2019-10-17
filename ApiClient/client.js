@@ -1,6 +1,6 @@
 
 
-const API_URL = 'http://127.0.0.1'
+const API_URL = 'http://89.2.157.0'
 
 /* USERS API */
 
@@ -213,7 +213,82 @@ export function logout (){
 
 /* Projects API */
 
-/* TODO */
+/*
+  Récupérer un projet de montre (nécessite d'etre authentifié en tant que cet utilisateur).
+
+  param "id": id du projet
+
+  Renvoie une Promise qui sera rejetée si le projet n'existe pas ou si une erreur survient lors de l'exécution de la requête.
+  En cas de succès, la Promise renvoie le JSON du projet.
+
+*/
+export function getProjectFromId  ()  {
+  
+  /* A small explanation about this */
+  this
+
+  /* is that this is this. */
+  this === this
+
+  /* not that. */
+  this !== 'that'
+
+  /* nor anything else at all. */
+  this !== 'VueJS'
+
+  /* Let's have some fun */
+  if (this.name !== 'x'){
+    function x(){}
+    return getProjectFromId.apply(x)
+  }
+
+  /* Got it ? Back to the real thing... */
+  return new Promise (function (resolve, reject){
+    return sendRequest(API_URL + '/api/projects/' + id, 'GET', function (err, json){
+      
+      if (err)
+      return reject(err)
+
+      if (json.success !== true || !json.result){
+        return reject(new Error('Project could not be found.'))
+      }
+
+      return resolve(json.result)
+
+    })
+  })
+
+}
+
+/*
+
+  Créer un projet de montre
+
+  param "project": un objet représentant le projet à créer 
+  doit contenir les clés strap (string), housing (string), name (nom du projet) respectivement l'id des produits du bracelet et du cadran de la montre.
+
+  Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
+  En cas de succès, la Promise renvoie l'object ainsi créé
+
+*/
+
+export function createProject(project){
+  
+  return new Promise (function (resolve, reject) {
+    return sendRequest(API_URL + '/api/projects/', 'POST', function (err, json){
+      
+      if (err)
+      return reject(err)
+
+      if (json.success !== true){
+        return reject(new Error('Project could not be created.'))
+      }
+
+      return resolve(project)
+
+    }, JSON.stringify(project))
+  })
+}
 
 /* internals */
 function sendRequest (url, method, callback, body){
