@@ -77,7 +77,7 @@
 <script>
 import Vue from 'vue'
 window.bus = new Vue()
-import { getProducts, API_URL } from '../../../../ApiClient/client'
+import { getProducts,getUserFromId, API_URL } from '../../../../ApiClient/client'
 const alerts = [
   { color: 'blue', textColor: 'white', message: 'Produit ajouter au panier', icon: 'done' },
   { color: 'red', textColor: 'white', message: 'Produit ajouter au favoris', icon: 'favorite' }
@@ -86,11 +86,13 @@ export default {
   name: 'Landing',
   props: ['shortcuts'],
   created () {
+
     getProducts().then( response => {
       let data = response
       this.products = data
       console.log('products =', this.products)
     })
+    
     console.log('landing , products =', this.products)
     this.loading = false
     window.bus.$on('removeFromBasket', (id) => {

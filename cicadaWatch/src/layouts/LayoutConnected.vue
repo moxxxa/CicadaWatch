@@ -254,40 +254,24 @@ export default {
     Connexion,
     profileEditor
   },
-
-  data () {
-    return {
-      user: [],
-      editProfile: false,
-      maximizedToggle: true,
-      showConnexion: false,
-      showInscDialog: false,
-      switchToclientService: false,
-      connected: false,
-      nbItemPanier: 0,
-      nbItemFavori: 0,
-      leftDrawerOpen: false,
-      panierListe: [],
-      favorisListe: []
-    }
-  },
   created () {
     /*    window.bus.$on('letIConnect', (userFinal) => {
       this.user = userFinal
       console.log('')
     })
     */
-      id = sessionStorage.getItem('user');
+        // id = sessionStorage.getItem('user');
+      id = "5da897ed2bccee4d04399e10";
       getUserFromId(id).then( response => {
-      let data = response;
-      if(data.success == true) {
+        let data = response;
+        if(data.success == true) {
             console.log('user =', data.user)
-            this.connected = true;        
             console.log("connected", data.user)
+            this.connected = true;
           } else {
             console.log("no connected")      
             this.connected = false;
-      }
+        }
     })
     window.bus.$on('productAddToPanier', (product) => {
       console.log('dans ajout panier')
@@ -305,7 +289,27 @@ export default {
       }
     })
   },
+  data () {
+    return {
+      user: [],
+      editProfile: false,
+      maximizedToggle: true,
+      showConnexion: false,
+      showInscDialog: false,
+      switchToclientService: false,
+      Connected: false,
+      nbItemPanier: 0,
+      nbItemFavori: 0,
+      leftDrawerOpen: false,
+      panierListe: [],
+      favorisListe: []
+    }
+  },
   methods: {
+    Connected:function(){
+      this.connected = true
+    },
+
     onDialogHide () {
       // required to be emitted
       // when QDialog emits "hide" event

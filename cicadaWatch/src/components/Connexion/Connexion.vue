@@ -62,10 +62,9 @@ export default {
           let data = response
           if(data.success == true) {
             sessionStorage.setItem('user', data.user)
-            console.log("connexion ok pour", data.user)
-            this.connected = true;        
-
-            /*location.href = 'home' */
+            console.log("connexion ok", data.user)
+            this.methods.Connected()
+           /* location.href = 'home' */
           } else {
             console.log("error password")
             this.$q.notify({
@@ -83,8 +82,8 @@ export default {
             message: 'Invalid credentials'
           })
         })
-    
-    }
+    },
+
   }
 }
 </script>
