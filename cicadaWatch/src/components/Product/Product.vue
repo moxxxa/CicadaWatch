@@ -86,7 +86,7 @@ export default {
       this.currentGameImage = imgUrl
     },
     toWorkShop () {
-      this.$router.push({ path: 'workshop', query: { product: this.prod } })
+      this.$router.push({ path: '/workshop', query: { product: this.prod } })
       this.actionProduit = 0
     },
     ajouterAuFavoris () {
