@@ -70,24 +70,6 @@ const routes = [
         }
       }
     ]
-  },
-  {
-    path: '/home1',
-    component: LayoutNoConnected,
-    children: [
-      {
-        path: '',
-        components: {
-          default: Home
-        }
-      },
-      {
-        path: '/detail-product',
-        components: {
-          default: ProductDetails
-        }
-      }
-    ]
   }
 ]
 

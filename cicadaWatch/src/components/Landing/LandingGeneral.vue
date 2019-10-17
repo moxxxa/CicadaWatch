@@ -9,7 +9,7 @@
     size="3em"
   />-->
     <div class="col-12 flex row justify-center shortcuts">
-      <div v-for="link in products" :key="link.id">
+      <div v-for="link in products" :key="link.name">
         <div class="col-xl-2 col-md-4 col-xs-5 q-ml-lg q-pl-xl q-pr-xl q-pb-xl q-pa-xl">
         <q-card>
           <q-item>
@@ -19,7 +19,7 @@
           </q-item>
           <q-img
             :src="getPicture(link.pictures[0])"
-            @click="goToProduct(link)"
+            @click="goToProduct(link.id)"
             style="height: 250px; max-width: 300px"
           >
           <div class="absolute-bottom custom-caption">
@@ -133,8 +133,8 @@ export default {
         }
       }
     },
-    goToProduct (link) {
-      this.$router.push({ path: 'detail-product', query: { prod: link } })
+    goToProduct (id) {
+      this.$router.push({ path: 'detail-product', query: { id: id } })
     },
     trigger () {
       const bar = this.$refs.bar
@@ -193,7 +193,6 @@ export default {
     },
     showNotif (position, type, motife, product) {
       if (this.findMotifInPanierFavoris(product, motife) === false) {
-        window.bus.$emit('reactionPanierFavoris', motife)
         if (motife === 'panier') {
           window.bus.$emit('productAddToPanier', product)
         }

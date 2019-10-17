@@ -2,7 +2,7 @@
     <q-card class="text-black">
       <q-bar>
           <div class="text-h4">
-            PlayTounsi inscription
+            Augarde inscription
           </div>
           <q-space/>
             <q-btn dense flat icon="close" v-close-popup>

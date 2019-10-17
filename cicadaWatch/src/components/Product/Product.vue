@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-xs">
     <center><h4>&nbsp;&nbsp;&nbsp;&nbsp;{{prod.name}}</h4></center>
+    <br><br><br>
     <div class="flex row">
       <div class="col-md-4 col-xs-3 col-sm-3">
         <div class="col-xs-12 col-sm-12">
@@ -17,27 +18,64 @@
      </q-chip>
   </div>
 </div>
-  <div class="col-xs-9 col-sm-9">
-    &nbsp;
-  </div>
-  <div class="col-md-5 col-xs-5 col-sm-5">
-    &nbsp;
-  </div>
-  <div class="col-md-3 col-xs-7 col-sm-7">
+
+  <div class="col-md-3 col-xs-8 col-sm-8">
+    <div class="flex row">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
     <q-carousel
-            arrows
-            animated
-            swipeable
-            infinite
-            v-model="slide"
-          >
-          <div v-for="picture in prod.pictures" :key="picture">
-            <q-carousel-slide :name="picture" :img-src="picture">
-            </q-carousel-slide>
-          </div>
-        </q-carousel>
+      arrows
+      animated
+      swipeable
+      infinite
+      transition-prev="jump-right"
+      transition-next="jump-left"
+      control-color="black"
+      prev-icon="arrow_left"
+      next-icon="arrow_right"
+      v-model="slide"
+    >
+        <q-carousel-slide v-for="picture in slides" :key="picture.id" :name="picture.id" :img-src="getPicture(picture.image)">
+        </q-carousel-slide>
+      </span>
+    </q-carousel>
   </div>
+  </div>
+</div>
   <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="flex rox">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        &nbsp;
+      </div>
   <q-btn-toggle
     push
     v-model="actionProduit"
@@ -50,6 +88,7 @@
     ]"
   >
 </q-btn-toggle>
+</div>
 </div>
 </div>
 <div v-if="actionProduit === 1">
@@ -67,6 +106,7 @@
 </template>
 <script>
 import Vue from 'vue'
+import { API_URL, getProductFromId } from '../../../../ApiClient/client'
 window.bus = new Vue()
 export default {
   name: 'Product',
@@ -75,12 +115,20 @@ export default {
       prod: [],
       showImageDialoge: false,
       slide: 1,
-      actionProduit: 0
+      actionProduit: 0,
+      idSlide: 0,
+      slides: []
     }
   },
   computed: {
   },
   methods: {
+    getPicture (link) {
+      console.log('dans get pictures')
+      const adresse = `${API_URL}${link}`
+      console.log('adresse =', adresse)
+      return adresse
+    },
     ShowImage (imgUrl) {
       this.showImageDialoge = true
       this.currentGameImage = imgUrl
@@ -105,9 +153,19 @@ export default {
     }
   },
   created () {
-    if (this.$route.query && this.$route.query.prod) {
-      this.prod = this.$route.query.prod
-      console.log('yessssssssssss', this.prod)
+    if (this.$route.query && this.$route.query.id) {
+      getProductFromId(this.$route.query.id).then( response => {
+        this.prod = response
+        for (var i = 0; i < this.prod.pictures.length; i++) {
+          this.slides.push({
+            id: i + 1,
+            image: this.prod.pictures[i]
+          })
+        }
+        console.log('slides =', this.slides)
+        //  this.slide = this.prod.pictures[0]
+        console.log('products =', this.products)
+      })
     }
   }
 }

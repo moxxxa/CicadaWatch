@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-indigo-1">
+  <div class="bg-grey-4">
     <landing  @reactionPanierFavoris="updateLayout" />
     <Publicity/>
   </div>
