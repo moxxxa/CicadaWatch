@@ -43,7 +43,7 @@
 </template>
 <script>
 //  import webService from '../../../web-service'
-import { getProducts, API_URL } from '../../../../ApiClient/client'
+import { authenticate, API_URL } from '../../../../ApiClient/client'
 
 export default {
   name: 'Connexion',
@@ -55,12 +55,26 @@ export default {
   },
   methods: {
     login () {
-        webService.login({ email: this.email, password: this.mdp })
+        let email = this.email;
+        let password = this.mdp;
+        authenticate(email, password)
         .then(response => {
-          let data = response.data.data
-          sessionStorage.setItem('token', data.token)
-          sessionStorage.setItem('user', JSON.stringify(data.user))
-          location.href = 'home'
+          let data = response
+          if(data.success == true) {
+            sessionStorage.setItem('user', data.user)
+            console.log("connexion ok pour", data.user)
+            this.connected = true;        
+
+            /*location.href = 'home' */
+          } else {
+            console.log("error password")
+            this.$q.notify({
+            color: 'red-7',
+            textColor: 'white',
+            icon: 'fas fa-check-circle',
+            message: 'Invalid credentials'
+          })
+          }
         }, () => {
           this.$q.notify({
             color: 'red-7',

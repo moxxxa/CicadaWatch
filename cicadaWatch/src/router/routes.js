@@ -8,7 +8,6 @@ const ProductDetails = () => import('components/Product/Product')
 const Contact = () => import('components/Contact/Contact')
 const Address = () => import('components/Address/Address')
 const Workshop = () => import('components/Workshop/Workshop')
-const LayoutNoConnected = () => import('layouts/LayoutNoConnected')
 const routes = [
   { path: '', redirect: '/home' },
   {
@@ -67,24 +66,6 @@ const routes = [
         path: '',
         components: {
           default: Panier
-        }
-      }
-    ]
-  },
-  {
-    path: '/home1',
-    component: LayoutNoConnected,
-    children: [
-      {
-        path: '',
-        components: {
-          default: Home
-        }
-      },
-      {
-        path: '/detail-product',
-        components: {
-          default: ProductDetails
         }
       }
     ]

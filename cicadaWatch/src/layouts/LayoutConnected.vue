@@ -238,6 +238,8 @@
 
 <script>
 import Vue from 'vue'
+import { getUserFromId, API_URL } from '../../../ApiClient/client'
+
 window.bus = new Vue()
 import profileEditor from 'src/components/profile/EditProfile'
 import QlayoutList from 'src/layouts/QlayoutList'
@@ -252,6 +254,7 @@ export default {
     Connexion,
     profileEditor
   },
+
   data () {
     return {
       user: [],
@@ -259,8 +262,8 @@ export default {
       maximizedToggle: true,
       showConnexion: false,
       showInscDialog: false,
-      connected: false,
       switchToclientService: false,
+      connected: false,
       nbItemPanier: 0,
       nbItemFavori: 0,
       leftDrawerOpen: false,
@@ -274,6 +277,18 @@ export default {
       console.log('')
     })
     */
+      id = sessionStorage.getItem('user');
+      getUserFromId(id).then( response => {
+      let data = response;
+      if(data.success == true) {
+            console.log('user =', data.user)
+            this.connected = true;        
+            console.log("connected", data.user)
+          } else {
+            console.log("no connected")      
+            this.connected = false;
+      }
+    })
     window.bus.$on('productAddToPanier', (product) => {
       console.log('dans ajout panier')
       if (!this.findPanier(product)) {
