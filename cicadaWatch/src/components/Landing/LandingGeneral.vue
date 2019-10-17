@@ -9,7 +9,7 @@
     size="3em"
   />-->
     <div class="col-12 flex row justify-center shortcuts">
-      <div v-for="link in links" :key="link">
+      <div v-for="link in products" :key="link.id">
         <div class="col-xl-2 col-md-4 col-xs-5 q-ml-lg q-pl-xl q-pr-xl q-pb-xl q-pa-xl">
         <q-card>
           <q-item>
@@ -18,7 +18,7 @@
             </q-item-section>
           </q-item>
           <q-img
-            :src="link.imageGenarle"
+            :src="link.pictures[0]"
             @click="goToProduct(link)"
             style="height: 250px; max-width: 300px"
           >
@@ -64,22 +64,7 @@
     </q-card>
   </div>
 </div>
-
     </div>
-    <!--class="bg-grey-7"-->
-    <q-dialog medium-width v-model="showVideoDialog" transition-show="flip-down" transition-hide="flip-up">
-      <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section class="row items-center justify-between">
-        <div class="text-h6">{{this.gameName}}</div>
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-card-section>
-          <center>
-            <iframe style="width: 640px; height: 360px; max-width: 70vw; "  :src="this.VideoUrl" frameborder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
-          </center>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
     <q-ajax-bar
       ref="bar"
       position="bottom"
@@ -101,6 +86,8 @@ export default {
   name: 'Landing',
   props: ['shortcuts'],
   created () {
+    this.products = sessionStorage.getItem('products')
+    console.log('landing , products =', this.products)
     this.loading = false
     window.bus.$on('removeFromBasket', (id) => {
       this.removeFromBasket(id)
@@ -120,7 +107,8 @@ export default {
       posts: [],
       slide: 'first',
       gameName: '',
-      showImageDialoge: false
+      showImageDialoge: false,
+      products: []
     }
   },
   methods: {

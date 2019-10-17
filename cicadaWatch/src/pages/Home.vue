@@ -8,7 +8,7 @@
 <script>
 import Landing from 'src/components/Landing/LandingGeneral'
 import Publicity from 'src/components/Publicity/Publicity'
-import HomeShortcuts from 'src/pages/HomeShortcuts.json'
+import { getProducts } from '../../../ApiClient/client'
 
 export default {
   name: 'Home',
@@ -23,8 +23,11 @@ export default {
   },
   computed: {
     shortcuts () {
-      console.log('shortcuts=', HomeShortcuts)
-      return HomeShortcuts
+      getProducts().then( response => {
+        let data = response
+        console.log('data =', data)
+        sessionStorage.setItem('products', data)
+      })
     }
   },
   methods: {

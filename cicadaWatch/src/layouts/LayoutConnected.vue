@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="q-pt-xs">
+      <q-toolbar class="q-pt-xs bg-brown-4">
         <q-btn
           flat
           dense
@@ -205,7 +205,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-2"
+      content-class="bg-amber-2"
     >
   <QlayoutList/>
     </q-drawer>
