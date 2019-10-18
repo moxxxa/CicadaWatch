@@ -52,7 +52,7 @@ export function updateUser (id, user){
       }
 
       return resolve(true)
-    })
+    }, JSON.stringify(user))
   })
 }
 
