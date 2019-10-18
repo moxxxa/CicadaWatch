@@ -29,7 +29,6 @@
             </q-step>
             <q-step
               :name="2"
-              :done="done1"
               title="Validation"
               icon="local_shipping"
             >
@@ -52,7 +51,7 @@
               <div class="col-md-12 col-xs-12 col-sm-12">
                 &nbsp;
               </div>
-              <div class="col-md-12 col-xs-12 col-sm-12" v-for="link in panierListe" :key="link">
+              <div class="col-md-12 col-xs-12 col-sm-12" v-for="link in panierListe" :key="link.id">
                 <div class="row">
               <div class="col-md-1 col-xs-1 col-sm-1">
               </div>
@@ -63,7 +62,7 @@
                     </span>
                     <span class="col-md-2 col-xs-3 col-sm-3">
                       <q-img
-                        :src="link.imageGenarle"
+                        :src="getPicture(link.pictures[0])"
                         spinner-color="white"
                         style="height: 120px; max-width: 80px"
                       />
@@ -227,7 +226,7 @@
       &nbsp;
     </div>
     <div class="flex row">
-      <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="col-md-4 col-sm-4 col-xs-5">
         &nbsp;
       </div>
       <div class="col-md-2 col-sm-2 col-xs-2">
@@ -247,9 +246,9 @@
           >
         </q-img>
       </div>
-      <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="col-md-12 col-sm-8 col-xs-12">
         <center>
-          <font size="5">Payer avec Visa ou MasterCard</font>
+          <font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Payer avec Visa ou MasterCard</font>
         </center>
       </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -305,6 +304,72 @@
         <q-btn label="Valider le payement" color="primary" @click="PayerWithStripe"/>
       </div>
       <div class="col-md-4 col-sm-4 col-xs-4"/>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div><div class="col-md-4 col-sm-4 col-xs-12">
+        &nbsp;
+      </div>
 </div>
   </div>
 </div>
@@ -312,6 +377,7 @@
 <script>
 import Vue from 'vue'
 import VueStripeCheckout from 'vue-stripe-checkout'
+import { API_URL } from '../../../../ApiClient/client'
 Vue.use(VueStripeCheckout, 'your-publishable-key-here')
 import { openURL } from 'quasar'
 export default {
@@ -348,6 +414,10 @@ export default {
   },
   methods: {
     openURL,
+    getPicture (link) {
+      const adresse = `${API_URL}${link}`
+      return adresse
+    },
     removeFromBasket (link) {
       for (var i = 0; i < this.panierListe.length; i++) {
         if (this.panierListe[i].id === link.id) {

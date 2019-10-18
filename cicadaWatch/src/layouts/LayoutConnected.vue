@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="q-pt-xs bg-brown-4">
+      <q-toolbar class="q-pt-xs bg-teal-7">
         <q-btn
           flat
           dense
@@ -150,7 +150,7 @@
           </q-tooltip>
         </template>
         <template v-slot:Profile>
-          <q-menu anchor="top right" self="bottom right" content-class="bg-grey text-white">
+          <q-menu anchor="top right" self="bottom right" content-class="bg-teal-8 text-white">
               <q-list class="link-decoration" v-if="connected">
                 <q-item>
                     <q-item-section avatar class="q-pa-md">
@@ -309,7 +309,7 @@ export default {
       this.showInscDialog = true
     },
     goHome () {
-      this.$router.back()
+      this.$router.push('/home')
     },
     findPanier (product) {
       for (var i = 0; i < this.panierListe.length; i++) {

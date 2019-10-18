@@ -88,7 +88,7 @@ export default {
   created () {
     getProducts().then( response => {
       let data = response
-      this.products = data
+      this.products = data.filter( prod => prod.type === 'montre' || prod.type === 'cadran')
       console.log('products =', this.products)
     })
     console.log('landing , products =', this.products)
