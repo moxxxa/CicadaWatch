@@ -1,3 +1,4 @@
+
 <template>
 <q-layout>
     <q-toolbar class="text-center">
@@ -7,13 +8,23 @@
     </q-toolbar>
   <form>
     <div class="flex row q-pa-md justify-center">
-        <q-field class="col-6 q-mb-md">
-          <q-input v-model="profile.name"/>
+        <q-field class="col-6 q-mb-md"> 
+          <q-input :value="firstname" type="text" label="firstname" v-model="firstname"/>
         </q-field>
     </div>
     <div class="flex row q-pa-md justify-center">
         <q-field  class="col-6 q-mb-md">
-          <q-input v-model="profile.prenom"/>
+          <q-input  :value="surname" type="text" label="surname" v-model="surname"/>
+        </q-field>
+    </div>
+    <div class="flex row q-pa-md justify-center">
+        <q-field  class="col-6 q-mb-md">
+          <q-input :value="email" type="email" label="email" v-model="email"/>
+        </q-field>
+    </div>
+    <div class="flex row q-pa-md justify-center">
+        <q-field  class="col-6 q-mb-md">
+          <q-input :value="phoneNumber" type="text" label="phoneNumber" v-model="phoneNumber"/>
         </q-field>
     </div>
     <div class="flex row col-12 justify-start">
@@ -33,6 +44,7 @@
 </template>
 
 <script>
+import { getUserFromId,updateUser,  API_URL } from '../../../../ApiClient/client'
 import { required, maxLength, minLength, sameAs } from 'vuelidate/lib/validators'
 import Password from 'vue-password-strength-meter'
 import Passwords from './password-settings'
@@ -42,18 +54,30 @@ export default {
     Password
   },
   props: {
-    profile: { type: Array, required: true }
   },
   data () {
     return {
       password1: '',
       password2: '',
       passwordScore: 0,
-      profileEdit: {
-        nom: 'esgi',
-        prenom: 'esgi'
-      }
+      firstname: '',
+      surname: '',
+      email: '',
+      phoneNumber: ''
+    
     }
+  },
+    mounted() {          
+        let id = sessionStorage.getItem('user');
+        getUserFromId(id).then( response => {
+          let data = response;
+          this.firstname = data.firstname
+          this.surname = data.surname
+          this.email = data.email
+          this.phoneNumber = data.phoneNumber
+          //this.connect(sessionStorage.getItem('connected'))
+          console.log("test")
+      })
   },
   validations () {
     const validators = {
@@ -92,15 +116,33 @@ export default {
   },
   methods: {
     saveChanges () {
-      this.$q.notify({
-        color: 'green',
-        textColor: 'white',
-        message: ' Profile mis à jour',
-        position: 'center',
-        icon: 'done_outline',
-        timeout: 500
-      })
-      this.$emit('hide')
+      let email = this.email;
+      let password = this.password1;
+      let firstname = this.firstname;
+      let surname = this.surname;
+      let phoneNumber = this.phoneNumber;
+      let users =  {
+          email: email,
+          password: password,
+          surname: surname,
+          firstname: firstname,
+          phoneNumber: phoneNumber
+      }
+      let id = sessionStorage.getItem('user');
+      updateUser(id, users)
+        .then(response => {
+            let data = response
+            this.$q.notify({
+              color: 'green',
+              textColor: 'white',
+              message: ' Profile mis à jour',
+              position: 'center',
+              icon: 'done_outline',
+              timeout: 500
+            })
+            this.$emit('hide')
+       
+        })
     },
     onScoreChange (score) {
       this.passwordScore = score

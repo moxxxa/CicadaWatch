@@ -1,17 +1,12 @@
-
-
-const API_URL = 'http://89.2.157.0'
+export const API_URL = 'http://89.2.157.0'
 
 /* USERS API */
 
 /*
   Récupérer un profil utilisateur (nécessite d'etre authentifié en tant que cet utilisateur).
-
   param "id": id de l'utilisateur
-
   Renvoie une Promise qui sera rejetée si l'utiliateur n'existe pas ou si une erreur survient lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie le JSON de l'utilisateur.
-
 */
 export function getUserFromId (id){
   return new Promise (function (resolve, reject){
@@ -30,15 +25,11 @@ export function getUserFromId (id){
 
 /*
   Mettre à jour les champs d'un profil utilisateur (nécessite d'etre authentifié en tant que cet utilisateur).
-
   param "id": id de l'utilisateur
   param "user": un objet contenant les champs à modifier (surname (string), firstname (string), email (string), password (string))
-
   Chacun des champ de l'objet "user" sont optionnels (on peut très bien ne rien update du tout avec un objet vide {}).
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie true
-
 */
 export function updateUser (id, user){
   return new Promise (function (resolve, reject) {
@@ -58,9 +49,7 @@ export function updateUser (id, user){
 
 /*
   Supprimer un compte utilisateur (nécessite d'être authentifiée en tant que cet utilisateur)
-
   param "id": id de l'utilisateur
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie true
 */
@@ -81,14 +70,10 @@ export function deleteUser(id){
 }
 
 /*
-
   Créer un compte utilisateur
-
   param "user": un objet représentant l'utilisateur à créer (doit contenir les clés firstname (string), surname (string), email (string), password (string))
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie true
-
 */
 
 export function createUser (user){
@@ -110,10 +95,8 @@ export function createUser (user){
 
 /*
   Récupérer l'ensemble des produits en base.
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie un tableau de produits
-
 */
 export function getProducts(){
   return new Promise (function (resolve, reject) {
@@ -132,10 +115,8 @@ export function getProducts(){
 
 /*
   Récupérer un produit via son id.
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie le produit demandé.
-
 */
 export function getProductFromId(id){
   
@@ -156,15 +137,11 @@ export function getProductFromId(id){
 }
 
 /* 
-
   S'authentifier.
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   La Promise résolue doit fournir un objet contenant les clés suivantes:
-
   success (booléen): indique si l'authentification a réussi ou non
   user: id de l'utilisateur authentifié, ou null si l'authentification n'a pas abouti
-
 */
 
 export function authenticate (email, password){
@@ -187,10 +164,8 @@ export function authenticate (email, password){
 
 /* 
   Se déauthentifier
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   La Promise résolue doit renvoyer true.
-
 */
 export function logout (){
   
@@ -215,12 +190,9 @@ export function logout (){
 
 /*
   Récupérer un projet de montre (nécessite d'etre authentifié en tant que cet utilisateur).
-
   param "id": id du projet
-
   Renvoie une Promise qui sera rejetée si le projet n'existe pas ou si une erreur survient lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie le JSON du projet.
-
 */
 export function getProjectFromId  ()  {
   
@@ -261,15 +233,11 @@ export function getProjectFromId  ()  {
 }
 
 /*
-
   Créer un projet de montre
-
   param "project": un objet représentant le projet à créer 
   doit contenir les clés strap (string), housing (string), name (nom du projet) respectivement l'id des produits du bracelet et du cadran de la montre.
-
   Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
   En cas de succès, la Promise renvoie l'object ainsi créé
-
 */
 
 export function createProject(project){

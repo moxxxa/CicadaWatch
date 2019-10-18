@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="q-pt-xs bg-black">
+      <q-toolbar class="q-pt-xs bg-brown-4">
         <q-btn
           flat
           dense
@@ -12,11 +12,12 @@
         />
         <q-toolbar-title>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <q-icon
-            name="home"
+          <q-img
+            src="statics/Logo-Augarde-HD.png"
+            style="height: 60px; max-width: 92px"
             @click="goHome"
           >
-        </q-icon>
+          </q-img>
         </q-toolbar-title>
       <q-btn-toggle
         size="sm"
@@ -24,9 +25,9 @@
         toggle-color="white"
         push
         :ripple="{ color: 'black' }"
-        v-model="switchToWorkshop"
+        v-model="switchToclientService"
         :options="[
-          {label: 'Atelier', slot: 'workshop', icon: 'fas fa-tools', value: 1},
+          {label: 'Contact', icon: 'contact_mail', slot: 'ClientChat', value: true},
           {label: 'Favoris', slot: 'Favoris', icon: 'favorite'},
           {label: 'Panier', slot: 'Panier', icon: 'shopping_cart'},
           {label: 'compte', slot: 'Profile', icon: 'perm_identity'}
@@ -62,7 +63,7 @@
                 <q-btn icon="delete" flat round dense @click="removeFromFavoris(link)" />
               </div>
               <q-img
-                :src="getPicture(link.pictures[0])"
+                :src="link.imageGenarle"
                 spinner-color="white"
                 style="height: 120px; max-width: 80px"
               />
@@ -106,7 +107,7 @@
                 <q-btn icon="delete" flat round dense @click="removeFromBasket(link)" />
               </div>
               <q-img
-                :src="getPicture(link.pictures[0])"
+                :src="link.imageGenarle"
                 spinner-color="white"
                 style="height: 120px; max-width: 80px"
               />
@@ -137,7 +138,7 @@
           </q-menu>
         </template>
         <template
-          v-slot:workshop
+          v-slot:ClientChat
           >
           <q-tooltip
             content-class="bg-amber text-black shadow-4"
@@ -146,11 +147,11 @@
             transition-show="rotate"
             transition-hide="rotate"
           >
-            Créer votre montre
+            Contacter le service client
           </q-tooltip>
         </template>
         <template v-slot:Profile>
-          <q-menu anchor="top right" self="bottom right" content-class="bg-teal-8 text-white">
+          <q-menu anchor="top right" self="bottom right" content-class="bg-grey text-white">
               <q-list class="link-decoration" v-if="connected">
                 <q-item>
                     <q-item-section avatar class="q-pa-md">
@@ -163,10 +164,16 @@
                   </q-item-section>
                 </q-item>
                 <q-item class="flex-center">
-                  User name
+                  {{firstname}}
+                </q-item>
+                <q-item class="flex-center">
+                  {{surname}} 
+                </q-item>
+                <q-item class="flex-center">
+                  {{email}} 
                 </q-item>
                 <q-item>
-                  <q-btn box="rectangle" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
+                  <q-btn box="rectangle" @click="deconnect" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
                 </q-item>
                 <q-dialog v-model="editProfile" content-classes="editprofile-content">
                     <q-card style="width: 700px; max-width: 80vw;">
@@ -204,12 +211,12 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-blue-grey-10"
+      content-class="bg-amber-2"
     >
   <QlayoutList/>
     </q-drawer>
-    <div v-if="switchToWorkshop">
-      {{workshop()}}
+    <div v-if="switchToclientService">
+      {{serviceClient()}}
     </div>
     <q-dialog
       medium-width
@@ -237,12 +244,11 @@
 
 <script>
 import Vue from 'vue'
-window.bus = new Vue()
+import { getUserFromId, API_URL } from '../../../ApiClient/client'
 import profileEditor from 'src/components/profile/EditProfile'
 import QlayoutList from 'src/layouts/QlayoutList'
 import Inscription from 'src/components/Inscription/Inscription'
 import Connexion from 'src/components/Connexion/Connexion'
-import { API_URL } from '../../../ApiClient/client'
 export default {
   name: 'LayoutConnected',
   components: {
@@ -259,14 +265,18 @@ export default {
       maximizedToggle: true,
       showConnexion: false,
       showInscDialog: false,
+      switchToclientService: false,
       connected: false,
-      switchToWorkshop: false,
       nbItemPanier: 0,
       nbItemFavori: 0,
       leftDrawerOpen: false,
       panierListe: [],
-      favorisListe: []
+      favorisListe: [],
+      firstname: '',
+      surname: '',
+      email: ''
     }
+    
   },
   created () {
     /*    window.bus.$on('letIConnect', (userFinal) => {
@@ -290,15 +300,28 @@ export default {
       }
     })
   },
-  methods: {
-    workshop () {
-      this.$router.push('/workshop')
+    mounted() {          
+        this.connect(sessionStorage.getItem('connected'))
+        let id = sessionStorage.getItem('user');
+        getUserFromId(id).then( response => {
+          let data = response;
+          this.firstname = data.firstname
+          this.surname = data.surname
+          this.email = data.email
+          //this.connect(sessionStorage.getItem('connected'))
+          console.log("test")
+      })
+  },
+  methods: { 
+    connect(value) {
+      this.connected = value;
+      console.log("connect")
     },
-    getPicture (link) {
-      console.log('dans get pictures')
-      const adresse = `${API_URL}${link}`
-      console.log('adresse =', adresse)
-      return adresse
+    deconnect() {
+      sessionStorage.removeItem('connected')
+      sessionStorage.removeItem('user')
+      this.connected = false;
+      console.log("deconnect")
     },
     onDialogHide () {
       // required to be emitted
@@ -347,6 +370,10 @@ export default {
           window.bus.$emit('removeFromBasket', link.id)
         }
       }
+    },
+    serviceClient () {
+      this.switchToclientService = false
+      this.$router.push('clientService')
     },
     totalPrice () {
       let sum = 0
