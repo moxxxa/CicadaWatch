@@ -2,7 +2,7 @@
     <q-card class="text-black">
       <q-bar>
           <div class="text-h4">
-            PlayTounsi inscription
+            Augarde inscription
           </div>
           <q-space/>
             <q-btn dense flat icon="close" v-close-popup>
@@ -138,7 +138,6 @@
 </template>
 <script>
 import Vue from 'vue'
-import { createUser, API_URL } from '../../../../ApiClient/client'
 window.bus = new Vue()
 /* eslint-disable */
 import { openURL } from 'quasar'
@@ -184,18 +183,13 @@ export default {
       return false
     },
     onSubmit () {
-      let user = {
-        firstname: this.nom,
-        surname: this.prenom,
+      let user = [{
+        name: this.nom,
+        prenom: this.prenom,
         email: this.email,
-        password: this.psw,
-        phoneNumber: this.tel
-      }
-      createUser(user).then( response => {
-      let data = response
-      this.products = data
-      console.log('user sub =', this.products)
-    });
+        tel: this.tel,
+        mdp: this.psw
+      }]
       window.bus.$emit('letIConnect', user)
       this.$q.notify({
         color: 'green-7',
