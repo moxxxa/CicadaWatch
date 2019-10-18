@@ -309,7 +309,7 @@ export default {
       this.showInscDialog = true
     },
     goHome () {
-      this.$router.back()
+      this.$router.push('/home')
     },
     findPanier (product) {
       for (var i = 0; i < this.panierListe.length; i++) {
