@@ -1,17 +1,14 @@
 <template>
   <div>
-    <div class="flex row">
-      <div class="col-xs-3">
-        &nbsp;
-      </div>
-      <div class="col-xs-7">
-        <h4><font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atelier Augarde</font></h4>
-      </div>
-    </div>
-    <br><br><br><br><br>
-    <div class="flex row">
+    <span class="flex row">
       <div class="col-xs-3">
         <div class="flex row">
+          <div class="col-xs-12">
+            &nbsp;
+          </div>
+          <div class="col-xs-12">
+            &nbsp;
+          </div>
           <div class="col-xs-9">
             &nbsp;
           </div>
@@ -76,15 +73,6 @@
               style="height: 650px; max-width: 300px"
               />
           </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
           <div class="col-xs-3">
             &nbsp;
           </div>
@@ -95,6 +83,12 @@
       </div>
   <div class="col-xs-4">
     <div class="flex row">
+      <div class="col-xs-12">
+        &nbsp;
+      </div>
+      <div class="col-xs-12">
+        &nbsp;
+      </div>
       <div class="col-xs-1">
         &nbsp;
       </div>
@@ -148,7 +142,7 @@
       </div>
     </div>
   </div>
-  </div>
+</span>
   <q-img
     :src="currentCadranPictures()"
     style="height: 230px; width: 450px"
