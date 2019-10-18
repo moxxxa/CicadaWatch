@@ -42,15 +42,17 @@
   </q-card>
 </template>
 <script>
+import Vue from 'vue'
+window.bus = new Vue()
 //  import webService from '../../../web-service'
 import { authenticate, API_URL } from '../../../../ApiClient/client'
-
 export default {
   name: 'Connexion',
   data () {
     return {
       email: '',
-      mdp: ''
+      mdp: '',
+      connected: false
     }
   },
   methods: {
@@ -63,9 +65,11 @@ export default {
           if(data.success == true) {
             sessionStorage.setItem('user', data.user)
             console.log("connexion ok", data.user)
-            this.methods.Connected()
-           /* location.href = 'home' */
+            sessionStorage.setItem('connected',"true")
+            location.href = 'home' 
           } else {
+            sessionStorage.setItem('connected', "false")
+
             console.log("error password")
             this.$q.notify({
             color: 'red-7',

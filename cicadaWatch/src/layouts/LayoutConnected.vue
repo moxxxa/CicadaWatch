@@ -164,10 +164,16 @@
                   </q-item-section>
                 </q-item>
                 <q-item class="flex-center">
-                  User name
+                  {{firstname}}
+                </q-item>
+                <q-item class="flex-center">
+                  {{surname}} 
+                </q-item>
+                <q-item class="flex-center">
+                  {{email}} 
                 </q-item>
                 <q-item>
-                  <q-btn box="rectangle" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
+                  <q-btn box="rectangle" @click="deconnect" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
                 </q-item>
                 <q-dialog v-model="editProfile" content-classes="editprofile-content">
                     <q-card style="width: 700px; max-width: 80vw;">
@@ -239,8 +245,6 @@
 <script>
 import Vue from 'vue'
 import { getUserFromId, API_URL } from '../../../ApiClient/client'
-
-window.bus = new Vue()
 import profileEditor from 'src/components/profile/EditProfile'
 import QlayoutList from 'src/layouts/QlayoutList'
 import Inscription from 'src/components/Inscription/Inscription'
@@ -254,25 +258,34 @@ export default {
     Connexion,
     profileEditor
   },
+
+  data () {
+    return {
+      user: [],
+      editProfile: false,
+      maximizedToggle: true,
+      showConnexion: false,
+      showInscDialog: false,
+      switchToclientService: false,
+      connected: false,
+      nbItemPanier: 0,
+      nbItemFavori: 0,
+      leftDrawerOpen: false,
+      panierListe: [],
+      favorisListe: [],
+      firstname: '',
+      surname: '',
+      email: ''
+    }
+    
+  },
   created () {
     /*    window.bus.$on('letIConnect', (userFinal) => {
       this.user = userFinal
       console.log('')
     })
     */
-        // id = sessionStorage.getItem('user');
-      id = "5da897ed2bccee4d04399e10";
-      getUserFromId(id).then( response => {
-        let data = response;
-        if(data.success == true) {
-            console.log('user =', data.user)
-            console.log("connected", data.user)
-            this.connected = true;
-          } else {
-            console.log("no connected")      
-            this.connected = false;
-        }
-    })
+
     window.bus.$on('productAddToPanier', (product) => {
       console.log('dans ajout panier')
       if (!this.findPanier(product)) {
@@ -289,27 +302,30 @@ export default {
       }
     })
   },
-  data () {
-    return {
-      user: [],
-      editProfile: false,
-      maximizedToggle: true,
-      showConnexion: false,
-      showInscDialog: false,
-      switchToclientService: false,
-      Connected: false,
-      nbItemPanier: 0,
-      nbItemFavori: 0,
-      leftDrawerOpen: false,
-      panierListe: [],
-      favorisListe: []
-    }
+    mounted() {          
+        this.connect(sessionStorage.getItem('connected'))
+        let id = sessionStorage.getItem('user');
+        getUserFromId(id).then( response => {
+          let data = response;
+          this.firstname = data.firstname
+          this.surname = data.surname
+          this.email = data.email
+          //this.connect(sessionStorage.getItem('connected'))
+          console.log("test")
+      })
   },
-  methods: {
-    Connected:function(){
-      this.connected = true
+  methods: { 
+    connect(value) {
+      this.connected = value;
+      console.log("connect")
     },
+    deconnect() {
+      sessionStorage.removeItem('connected')
+      sessionStorage.removeItem('user')
 
+      this.connected = false;
+      console.log("deconnect")
+    },
     onDialogHide () {
       // required to be emitted
       // when QDialog emits "hide" event
