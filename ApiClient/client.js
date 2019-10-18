@@ -1,6 +1,6 @@
 
 
-export const API_URL = 'http://89.2.157.0'
+const API_URL = 'http://89.2.157.0'
 
 /* USERS API */
 
@@ -52,7 +52,7 @@ export function updateUser (id, user){
       }
 
       return resolve(true)
-    })
+    }, JSON.stringify(user))
   })
 }
 
@@ -103,6 +103,31 @@ export function createUser (user){
 
       return resolve(true)
     }, JSON.stringify(user))
+  })
+}
+/* 
+  S'authentifier.
+  Renvoie une Promise qui sera rejetée si une erreur survient côté serveur ou lors de l'exécution de la requête.
+  La Promise résolue doit fournir un objet contenant les clés suivantes:
+  success (booléen): indique si l'authentification a réussi ou non
+  user: id de l'utilisateur authentifié, ou null si l'authentification n'a pas abouti
+*/
+
+export function authenticate (email, password){
+  
+  return new Promise (function (resolve, reject) {
+    
+    return sendRequest(API_URL + '/auth/login', 'POST', function (err, json){
+      
+      if (err)
+      return reject(err)
+
+      return resolve({
+        success: json.success,
+        user: json.user
+      })
+
+    }, JSON.stringify({email: email, password: password}))
   })
 }
 
