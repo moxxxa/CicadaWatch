@@ -149,8 +149,8 @@
             Créer votre montre
           </q-tooltip>
         </template>
-        <template v-slot:Profile>
-          <q-menu anchor="top right" self="bottom right" content-class="bg-teal-8 text-white">
+   <template v-slot:Profile>
+          <q-menu anchor="top right" self="bottom right" content-class="bg-grey text-white">
               <q-list class="link-decoration" v-if="connected">
                 <q-item>
                     <q-item-section avatar class="q-pa-md">
@@ -163,10 +163,16 @@
                   </q-item-section>
                 </q-item>
                 <q-item class="flex-center">
-                  User name
+                  {{firstname}}
+                </q-item>
+                <q-item class="flex-center">
+                  {{surname}} 
+                </q-item>
+                <q-item class="flex-center">
+                  {{email}} 
                 </q-item>
                 <q-item>
-                  <q-btn box="rectangle" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
+                  <q-btn box="rectangle" @click="deconnect" anchor="center right" self="center left" label="Deconnexion" color="negative"/>
                 </q-item>
                 <q-dialog v-model="editProfile" content-classes="editprofile-content">
                     <q-card style="width: 700px; max-width: 80vw;">
@@ -242,7 +248,7 @@ import profileEditor from 'src/components/profile/EditProfile'
 import QlayoutList from 'src/layouts/QlayoutList'
 import Inscription from 'src/components/Inscription/Inscription'
 import Connexion from 'src/components/Connexion/Connexion'
-import { API_URL } from '../../../ApiClient/client'
+import { getUserFromId, API_URL } from '../../../ApiClient/client'
 export default {
   name: 'LayoutConnected',
   components: {
@@ -265,7 +271,10 @@ export default {
       nbItemFavori: 0,
       leftDrawerOpen: false,
       panierListe: [],
-      favorisListe: []
+      favorisListe: [],
+      firstname: '',
+      surname: '',
+      email: ''
     }
   },
   created () {
@@ -290,7 +299,29 @@ export default {
       }
     })
   },
-  methods: {
+    mounted() {          
+        this.connect(sessionStorage.getItem('connected'))
+        let id = sessionStorage.getItem('user');
+        getUserFromId(id).then( response => {
+          let data = response;
+          this.firstname = data.firstname
+          this.surname = data.surname
+          this.email = data.email
+          //this.connect(sessionStorage.getItem('connected'))
+          console.log("test")
+      })
+  },
+  methods: { 
+    connect(value) {
+      this.connected = value;
+      console.log("connect")
+    },
+    deconnect() {
+      sessionStorage.removeItem('connected')
+      sessionStorage.removeItem('user')
+      this.connected = false;
+      console.log("deconnect")
+    },
     workshop () {
       this.$router.push('/workshop')
     },

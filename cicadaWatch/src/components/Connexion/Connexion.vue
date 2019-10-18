@@ -42,24 +42,41 @@
   </q-card>
 </template>
 <script>
+import Vue from 'vue'
+window.bus = new Vue()
 //  import webService from '../../../web-service'
-
+import { authenticate, API_URL } from '../../../../ApiClient/client'
 export default {
   name: 'Connexion',
   data () {
     return {
       email: '',
-      mdp: ''
+      mdp: '',
+      connected: false
     }
   },
   methods: {
     login () {
-      /*  webService.login({ email: this.email, password: this.mdp })
+        let email = this.email;
+        let password = this.mdp;
+        authenticate(email, password)
         .then(response => {
-          let data = response.data.data
-          sessionStorage.setItem('token', data.token)
-          sessionStorage.setItem('user', JSON.stringify(data.user))
-          location.href = 'home'
+          let data = response
+          if(data.success == true) {
+            sessionStorage.setItem('user', data.user)
+            console.log("connexion ok", data.user)
+            sessionStorage.setItem('connected',"true")
+            location.href = 'home' 
+          } else {
+            sessionStorage.setItem('connected', "false")
+            console.log("error password")
+            this.$q.notify({
+            color: 'red-7',
+            textColor: 'white',
+            icon: 'fas fa-check-circle',
+            message: 'Invalid credentials'
+          })
+          }
         }, () => {
           this.$q.notify({
             color: 'red-7',
@@ -68,8 +85,7 @@ export default {
             message: 'Invalid credentials'
           })
         })
-    */
-    }
+    },
   }
 }
 </script>
