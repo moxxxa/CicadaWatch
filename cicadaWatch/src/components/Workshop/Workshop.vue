@@ -1,151 +1,106 @@
 <template>
-  <div>
+  <span>
+    <br><br>
     <span class="flex row">
-      <div class="col-xs-3">
-        <div class="flex row">
-          <div class="col-xs-12">
+      <span class="col-xs-3">
+        <span class="flex row">
+          <span class="col-xs-9">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-9">
-            &nbsp;
-          </div>
-          <div class="col-xs-3">
+          </span>
+          <span class="col-xs-3">
             <q-icon size="md" name="keyboard_arrow_left" @click="switchToleftCeinture"/>
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span><span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
+          </span>
+          <span class="col-xs-12">
             &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-12">
-            &nbsp;
-          </div>
-          <div class="col-xs-2">
-            &nbsp;
-          </div>
-          <div class="col-xs-10">
+          </span>
+          <span class="col-xs-12">
             <q-icon size="md" name="keyboard_arrow_left" @click="switchToLeftCadran"/>
-          </div>
-        </div>
-        </div>
-      <div class="col-xs-5">
-        <div class="flex row">
-          <div class="col-xs-2">
+          </span>
+        </span>
+        </span>
+      <span class="col-xs-5">
+        <span class="flex row">
+          <span class="col-xs-2">
             &nbsp;
-          </div>
-          <div class="col-xs-10">
+          </span>
+          <span class="col-xs-10">
             <q-img
               :src="currentCenituretPictures()"
-              style="height: 650px; max-width: 300px"
+              style="height: 450px; max-width: 300px"
               />
-          </div>
-          <div class="col-xs-3">
+          </span>
+          <span class="col-xs-3">
             &nbsp;
-          </div>
-          <div class="col-xs-9">
-            <q-btn size="lg" icon="save" label="Sauvegarder le projet" color="secondary" @click="ProjectName = !ProjectName"/>
-          </div>
-        </div>
-      </div>
-  <div class="col-xs-4">
-    <div class="flex row">
-      <div class="col-xs-12">
+          </span>
+          <span class="col-xs-9">
+            <q-btn size="md" icon="save" label="Sauvegarder le projet" color="secondary" @click="ProjectName = !ProjectName"/>
+          </span>
+        </span>
+      </span>
+  <span class="col-xs-4">
+    <span class="flex row">
+      <span class="col-xs-1">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
-        &nbsp;
-      </div>
-      <div class="col-xs-1">
-        &nbsp;
-      </div>
-      <div class="col-xs-10">
+      </span>
+      <span class="col-xs-10">
         <q-icon size="md" name="keyboard_arrow_right" @click="switchToRightCeinture"/>
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-12">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
+      </span>
+      <span class="col-xs-10">
         &nbsp;
-      </div>
-      <div class="col-xs-12">
-        &nbsp;
-      </div>
-      <div class="col-xs-12">
-        &nbsp;
-      </div>
-      <div class="col-xs-12">
-        &nbsp;
-      </div>
-      <div class="col-xs-12">
-        &nbsp;
-      </div>
-      <div class="col-xs-8">
-        &nbsp;
-      </div>
-      <div class="col-xs-4">
+      </span>
+      <span class="col-xs-2">
         <q-icon size="md" name="keyboard_arrow_right" @click="switchToRightCadran"/>
-      </div>
-    </div>
-  </div>
+      </span>
+    </span>
+  </span>
 </span>
   <q-img
     :src="currentCadranPictures()"
-    style="height: 230px; width: 450px"
+    style="height: 140px; width: 300px"
     class="fixed-center"
     />
     <q-dialog v-model="ProjectName" content-classes="editprofile-content">
@@ -172,7 +127,7 @@
           </q-card-section>
         </q-card>
     </q-dialog>
-  </div>
+  </span>
 </template>
 <script>
 import { getProducts, API_URL, createProject } from '../../../../ApiClient/client'
@@ -184,16 +139,20 @@ export default {
   created () {
     getProducts().then( response => {
       let data = response
+      this.products = response
       this.cadransPictures = (data.filter( prod => prod.type === 'cadran')).map( prod => prod.pictures)
       this.braceletsPictures = (data.filter( prod => prod.type === 'bracelet')).map( prod => prod.pictures)
       console.log('braceletsPictures =', this.braceletsPictures)
       console.log('cadransPictures =', this.cadransPictures)
+    }).catch (err => {
+      console.warn('error=', err)
     })
   },
   data () {
     return {
       cadransPictures: [],
       braceletsPictures: [],
+      products: [],
       numBracelet: 0,
       numCadran: 0,
       project: null,
@@ -249,23 +208,23 @@ export default {
       const housingName = this.cadransPictures[this.numCadran].join()
       console.log('strapName', strapName)
       this.project = {
-        strap: strapName,
-        housing: housingName,
-        name: this.WatchName,
-        idBracelet: this.numBracelet,
-        idCadran: this.numCadran
+        strap: this.numBracelet,
+        housing: this.numCadran,
+        name: this.WatchName
       }
       console.log('project =', this.project)
-      createProject(this.project).then( response => {
+      //  createProject(this.project).then( response => {
         this.$q.notify({
           color: 'green-7',
           textColor: 'white',
           icon: 'fas fa-check-circle',
           message: 'Projet Sauvegarder, vous pouvez le retrouver dans votre profile'
         })
-      }).catch ( err =>{
-        console.warn('error :', err)
-      })
+        this.$router.push('/home')
+    //        })
+    //    }).catch ( err =>{
+    //      console.warn('error :', err)
+    //    })
     }
   }
 }

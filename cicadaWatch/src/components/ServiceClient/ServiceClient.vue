@@ -12,7 +12,7 @@
         <div class="q-pl-xs">
           <div v-if="noMessageSent">
               <q-chat-message
-              name="Mohamed"
+              name="Augarde robot"
               avatar="https://cdn.quasar.dev/img/avatar1.jpg"
               text-color="white"
               >
@@ -24,7 +24,7 @@
             :key="message.text"
             :name="message.from"
             :text="[message.text]"
-            :sent="message.from == 'Mohamed' ? false : true"
+            :sent="message.from == 'Augarde robot' ? false : true"
             :avatar="message.avatar"
           >
         </q-chat-message>
@@ -90,7 +90,7 @@ export default {
       this.noMessageSent = false
       this.messages.push({
         text: 'Bonjour comment puis-je vous aider',
-        from: 'Mohamed',
+        from: 'Augarde robot',
         avatar: 'https://cdn.quasar.dev/img/avatar1.jpg'
       })
     }

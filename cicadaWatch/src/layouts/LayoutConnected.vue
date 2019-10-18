@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="q-pt-xs bg-teal-7">
+      <q-toolbar class="q-pt-xs bg-black">
         <q-btn
           flat
           dense
@@ -204,7 +204,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-secondary"
+      content-class="bg-blue-grey-10"
     >
   <QlayoutList/>
     </q-drawer>
@@ -292,7 +292,7 @@ export default {
   },
   methods: {
     workshop () {
-      this.$router.push({ path: '/workshop' })
+      this.$router.push('/workshop')
     },
     getPicture (link) {
       console.log('dans get pictures')
@@ -309,7 +309,7 @@ export default {
       this.showInscDialog = true
     },
     goHome () {
-      this.$router.push('/home')
+      this.$router.back()
     },
     findPanier (product) {
       for (var i = 0; i < this.panierListe.length; i++) {

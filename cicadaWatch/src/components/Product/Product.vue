@@ -165,6 +165,8 @@ export default {
         console.log('slides =', this.slides)
         //  this.slide = this.prod.pictures[0]
         console.log('products =', this.products)
+      }).catch (err => {
+        console.warn('error=', err)
       })
     }
   }
